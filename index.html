@@ -1,0 +1,271 @@
+<!--
+  File: index.html
+  Deskripsi: Formulir pendaftaran anggota Komunitas Teknologi
+  Instruksi: Simpan file ini sebagai index.html. Formulir menggunakan HTML5, fieldset/legend,
+  atribut seperti required/placeholder/min/max/pattern/autocomplete, dan validasi JS ringan.
+  Pembuat: risma febriyana
+-->
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Formulir Pendaftaran Komunitas Teknologi</title>
+  <style>
+    /* Gaya sederhana agar rapi saat dibuka di browser */
+    :root{
+      --primary:#0b7bd6;
+      --muted:#666;
+      --card:#ffffff;
+      --bg:#f3f6fa;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Inter", Arial, sans-serif;
+      background:var(--bg);
+      color:#222;
+      padding:30px;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      min-height:100vh;
+    }
+    .container{
+      width:100%;
+      max-width:760px;
+    }
+    header{ text-align:center; margin-bottom:18px; }
+    h1{ margin:6px 0 0; font-size:22px; }
+    p.lead{ color:var(--muted); margin:6px 0 18px; }
+
+    form{
+      background:var(--card);
+      border-radius:10px;
+      padding:20px;
+      box-shadow:0 6px 18px rgba(15,15,15,0.06);
+    }
+
+    fieldset{
+      border:1px solid rgba(11,123,214,0.15);
+      margin:0 0 16px;
+      padding:14px 16px;
+      border-radius:8px;
+    }
+    legend{ font-weight:600; color:var(--primary); padding:0 6px; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    label{ display:block; font-size:14px; margin-bottom:6px; font-weight:600; }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    input[type="tel"],
+    input[type="url"],
+    select,
+    textarea{
+      width:100%;
+      padding:9px 10px;
+      border:1px solid #d0d7de;
+      border-radius:6px;
+      font-size:14px;
+    }
+    textarea{ min-height:80px; resize:vertical; }
+
+    .inline-group{ display:flex; gap:12px; align-items:center; }
+    .checkboxes, .radios{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .small{ font-size:13px; color:var(--muted); margin-top:6px; }
+
+    .actions{ display:flex; justify-content:center; gap:12px; margin-top:10px; }
+    button{
+      padding:10px 16px;
+      border-radius:8px;
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+    }
+    button[type="reset"]{ background:#e0e0e0; color:#111; }
+    button[type="submit"]{ background:var(--primary); color:white; }
+
+    .error{ color:#b00020; font-size:13px; margin-top:6px; }
+    @media(max-width:620px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <p class="lead">Form isian ini dibuat sesuai tugas: gunakan berbagai tipe input HTML5, fieldset, atribut validasi, dan tampil rapi.</p>
+      <h1>Formulir Pendaftaran Komunitas Teknologi</h1>
+    </header>
+
+    <!-- Form utama: action mengarah ke submit.html (static). Jika ingin mengirim data ke server, ubah action & method. -->
+    <form id="regForm" action="submit.html" method="post" autocomplete="on" novalidate>
+      <!-- Data Pribadi -->
+      <fieldset>
+        <legend>Data Pribadi</legend>
+
+        <div class="grid">
+          <!-- Nama Lengkap -->
+          <div>
+            <label for="nama">Nama Lengkap <span aria-hidden="true">*</span></label>
+            <input type="text" id="nama" name="nama" placeholder="Contoh: Budi Santoso" required autocomplete="name" minlength="3" />
+            <div class="small">Masukkan nama sesuai KTP atau identitas resmi.</div>
+          </div>
+
+          <!-- Alamat Email -->
+          <div>
+            <label for="email">Alamat Email <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" placeholder="contoh@domain.com" required autocomplete="email" />
+            <div class="small">Gunakan email yang aktif untuk notifikasi.</div>
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label for="password">Kata Sandi <span aria-hidden="true">*</span></label>
+            <input type="password" id="password" name="password" placeholder="Minimal 6 karakter" minlength="6" required autocomplete="new-password" />
+            <div class="small">Minimal 6 karakter. Tidak ditampilkan di submit.html karena sifat statis.</div>
+          </div>
+
+          <!-- Usia -->
+          <div>
+            <label for="usia">Usia (tahun) <span aria-hidden="true">*</span></label>
+            <input type="number" id="usia" name="usia" min="10" max="100" placeholder="Contoh: 20" required />
+            <div class="small">Masukkan angka (10–100).</div>
+          </div>
+
+          <!-- Tanggal Lahir -->
+          <div>
+            <label for="tgl_lahir">Tanggal Lahir <span aria-hidden="true">*</span></label>
+            <input type="date" id="tgl_lahir" name="tgl_lahir" required />
+          </div>
+
+          <!-- Jenis Kelamin -->
+          <div>
+            <label>Jenis Kelamin <span aria-hidden="true">*</span></label>
+            <div class="radios" role="radiogroup" aria-labelledby="gender">
+              <label><input type="radio" name="gender" value="Laki-laki" required> Laki-laki</label>
+              <label><input type="radio" name="gender" value="Perempuan"> Perempuan</label>
+              <label><input type="radio" name="gender" value="Lainnya"> Lainnya</label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Informasi Kontak & Teknologi -->
+      <fieldset>
+        <legend>Informasi Kontak & Minat</legend>
+
+        <div class="grid">
+          <!-- Minat (checkbox) -->
+          <div>
+            <label>Minat (centang minimal 1) <span aria-hidden="true">*</span></label>
+            <div class="checkboxes">
+              <label><input type="checkbox" name="minat" value="AI"> AI</label>
+              <label><input type="checkbox" name="minat" value="Web"> Web</label>
+              <label><input type="checkbox" name="minat" value="IoT"> IoT</label>
+              <label><input type="checkbox" name="minat" value="Game"> Game</label>
+            </div>
+            <div class="small">Pilih topik teknologi yang kamu minati.</div>
+          </div>
+
+          <!-- Nomor Telepon -->
+          <div>
+            <label for="telp">Nomor Telepon <span aria-hidden="true">*</span></label>
+            <!-- pattern: hanya angka, 10-13 digit -->
+            <input type="tel" id="telp" name="telp" placeholder="08xxxxxxxxxx" pattern="[0-9]{10,13}" required autocomplete="tel" />
+            <div class="small">Masukkan tanpa spasi. Contoh: 081234567890</div>
+          </div>
+
+          <!-- Link Portofolio -->
+          <div>
+            <label for="url">Link Portofolio / GitHub</label>
+            <input type="url" id="url" name="url" placeholder="https://contoh.github.io/portfolio" autocomplete="url" />
+            <div class="small">Opsional, tapi berguna untuk menilai pengalamanmu.</div>
+          </div>
+
+          <!-- Upload Foto Profil -->
+          <div>
+            <label for="foto">Upload Foto Profil</label>
+            <input type="file" id="foto" name="foto" accept="image/*" />
+            <div class="small">Opsional. Hanya tipe gambar (jpg, png, dll.).</div>
+          </div>
+
+          <!-- Pendidikan / Keterangan -->
+          <div style="grid-column:1 / -1">
+            <label for="keterangan">Keterangan / Pengalaman Singkat</label>
+            <textarea id="keterangan" name="keterangan" placeholder="Tuliskan bahasa pemrograman atau pengalaman singkat (opsional)"></textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Tombol aksi -->
+      <div class="actions">
+        <button type="reset">Reset</button>
+        <button type="submit">Submit</button>
+      </div>
+
+      <!-- Area untuk menampilkan pesan error JS -->
+      <div id="formError" class="error" aria-live="polite" style="display:none;"></div>
+    </form>
+  </div>
+
+  <script>
+    /*
+      Validasi tambahan dengan JavaScript:
+      - Pastikan minimal satu checkbox "minat" dicentang
+      - Pastikan pola telepon sesuai
+      - Jika error, tampilkan pesan dan cegah submit
+      Catatan: karena action mengarah ke submit.html (static), data tidak dikirim ke server.
+    */
+    (function(){
+      const form = document.getElementById('regForm');
+      const errorBox = document.getElementById('formError');
+
+      function anyMinatChecked(){
+        const checks = form.querySelectorAll('input[type="checkbox"][name="minat"]');
+        return Array.from(checks).some(c => c.checked);
+      }
+
+      form.addEventListener('submit', function(e){
+        errorBox.style.display = 'none';
+        errorBox.textContent = '';
+
+        // validasi checkbox minat
+        if(!anyMinatChecked()){
+          e.preventDefault();
+          errorBox.style.display = 'block';
+          errorBox.textContent = 'Silakan pilih minimal satu minat (AI, Web, IoT, atau Game).';
+          return;
+        }
+
+        // validasi pola telp (pattern HTML juga akan memvalidasi, tapi kita cek lagi)
+        const tel = form.telp;
+        if(tel && tel.value){
+          const re = /^[0-9]{10,13}$/;
+          if(!re.test(tel.value)){
+            e.preventDefault();
+            errorBox.style.display = 'block';
+            errorBox.textContent = 'Nomor telepon tidak valid. Gunakan 10-13 digit angka (contoh: 081234567890).';
+            return;
+          }
+        }
+
+        // semua valid => izinkan submit (akan buka submit.html)
+      });
+
+      // Optional: disable submit jika browser tidak mendukung validation API (safety)
+      if(!('reportValidity' in HTMLFormElement.prototype)){
+        // nothing special, JS validations above cover
+      }
+    })();
+  </script>
+</body>
+</html>
